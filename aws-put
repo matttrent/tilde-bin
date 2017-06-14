@@ -1,4 +1,5 @@
 #!/bin/bash
+# syncs the current project (as defined by git repo) to default EC2 instance
 
 project_path=`git rev-parse --show-toplevel 2> /dev/null`
 
