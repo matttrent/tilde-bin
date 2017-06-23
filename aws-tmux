@@ -1,0 +1,15 @@
+#!/bin/bash
+
+session_list=`ssh $AWS_INSTANCE_URL -t "tmux list-sessions" 2> /dev/null | grep teamocil`
+session=`echo $session_list | grep -o "teamocil-session-\d\+"`
+attached=`echo $session_list | grep -o "(attached)"`
+
+if [[ -n $session && -z $attached ]]; then
+    echo "Active, unattached session"
+    ssh $AWS_INSTANCE_URL -t "tmux -CC attach -t $session"
+elif [[ -z $attached ]]; then
+    echo "No active session"
+    ssh $AWS_INSTANCE_URL -t "tmux -CC"
+else 
+    echo "Attached session"
+fi
