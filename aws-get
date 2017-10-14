@@ -6,6 +6,6 @@ project_path=`git rev-parse --show-toplevel 2> /dev/null`
 if [ $? -eq 0 ]; then
     project_name=`basename $project_path`
     # echo "in project $project_name"
-    rsync -avL --progress -e "ssh" $1 ubuntu@$AWS_INSTANCE_URL:projects/$project_name/ $project_path
+    rsync -avL --cvs-exclude --progress -e "ssh" $1 ubuntu@$AWS_INSTANCE_URL:projects/$project_name/ $project_path
 fi
 
