@@ -8,8 +8,9 @@ if [[ -n $session && -z $attached ]]; then
     echo "Active, unattached session"
     ssh $AWS_INSTANCE_URL -t "tmux -CC attach -t $session"
 elif [[ -z $attached ]]; then
-    echo "No active session"
+    echo "No active session:"
     ssh $AWS_INSTANCE_URL -t "tmux -CC"
 else 
     echo "Attached session"
+    echo $session
 fi
