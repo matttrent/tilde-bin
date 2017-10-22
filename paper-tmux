@@ -1,0 +1,16 @@
+#!/bin/bash
+
+session_list=`ssh $PAPERSPACE_IP -t "tmux list-sessions" 2> /dev/null | grep teamocil`
+session=`echo $session_list | grep -o "teamocil-session-\d\+"`
+attached=`echo $session_list | grep -o "(attached)"`
+
+if [[ -n $session && -z $attached ]]; then
+    echo "Active, unattached session"
+    ssh $PAPERSPACE_IP -t "tmux -CC attach -t $session"
+elif [[ -z $attached ]]; then
+    echo "No active session:"
+    ssh $PAPERSPACE_IP -t "tmux -CC"
+else 
+    echo "Attached session"
+    echo $session
+fi
